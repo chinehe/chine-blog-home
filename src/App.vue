@@ -1,11 +1,37 @@
-<script setup></script>
+<script setup>
+import Main from './main/Main.vue'
+import Menu from './menu/Menu.vue'
+import Navigation from './navigation/Navigation.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <Navigation/>
+  <div class="app-container">
+    <Menu/>
+    <Main/>
+  </div>
 </template>
 
-<style scoped></style>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+}
+</style>
