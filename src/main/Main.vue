@@ -1,6 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 
+const props = defineProps({
+  show: {
+    type: Boolean,
+    default: true
+  }
+})
+
 const article = ref({
   title: '欢迎来到我的博客',
   date: '2025-04-05',
@@ -34,7 +41,7 @@ const article = ref({
 </script>
 
 <template>
-  <main class="main-content">
+  <main class="main-content" v-show="show">
     <div class="article-container">
       <article class="article">
         <header class="article-header">

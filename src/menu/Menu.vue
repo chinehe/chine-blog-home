@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { ElTree } from 'element-plus'
 
 const menuItems = ref([
@@ -47,45 +47,35 @@ const menuItems = ref([
   }
 ])
 
-const activeItem = ref(null)
+// 定义事件发射器
+const emit = defineEmits(['select-leaf'])
 
-const handleNodeClick = (data) => {
-  activeItem.value = data
+const handleNodeClick = (data, node) => {
+  // 检查节点是否有子节点，如果没有则认为是叶子节点
+  if (!data.children) {
+    // 发送选中叶子节点的事件
+    emit('select-leaf', data)
+  }
 }
 </script>
 
 <template>
   <div class="menu">
+    <div class="menu-header">
+      <h3>文章分类</h3>
+    </div>
     <div class="menu-content">
       <el-tree
         :data="menuItems"
         node-key="id"
         :props="{ children: 'children', label: 'name' }"
         @node-click="handleNodeClick"
-        :expand-on-click-node="false"
-        :default-expand-all="false"
+        :expand-on-click-node="true"
+        :default-expand-all="true"
       />
     </div>
   </div>
 </template>
-
-<style scoped>
-.menu {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  bottom: 0;
-  width: 260px;
-  border-right: 1px solid rgba(60, 60, 60, 0.12);
-  overflow-y: auto;
-  padding-top: 20px;
-  z-index: 99;
-}
-
-.menu-content {
-  padding: 16px 0;
-}
-</style>
 
 <style scoped>
 .menu {
