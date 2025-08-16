@@ -157,6 +157,7 @@ const hasToc = computed(() => headings.value.length > 0)
   position: relative;
   height: 100%;
   overflow: hidden;
+  flex: 1;
 }
 
 .markdown-container {
@@ -245,8 +246,8 @@ const hasToc = computed(() => headings.value.length > 0)
 }
 
 .markdown-body {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: calc(100% - 300px);
+  margin: 10px 20px;
   padding-right: 20px; /* 为右侧目录留出空间 */
 }
 

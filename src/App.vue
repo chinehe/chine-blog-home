@@ -302,11 +302,7 @@ const handleSelectLeaf = (data) => {
   <div class="app-container">
     <Menu @select-leaf="handleSelectLeaf"/>
     <Main :show="!showMarkdown"/>
-  </div>
-  <div v-if="showMarkdown" class="markdown-wrapper">
-    <div class="markdown-content">
-      <MarkdownView :content="selectedContent"/>
-    </div>
+     <MarkdownView :content="selectedContent" v-if="showMarkdown" />
   </div>
 </template>
 
