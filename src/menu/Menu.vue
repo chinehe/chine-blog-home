@@ -1,54 +1,33 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { ElTree } from 'element-plus'
+import {get} from '../api/request'
 
-const menuItems = ref([
-  {
-    id: 1,
-    name: '前端开发',
-    children: [
-      { id: 11, name: 'Vue.js 入门', path: '/frontend/vue/intro' },
-      { id: 12, name: 'React 基础', path: '/frontend/react/basic' },
-      { id: 13, name: 'JavaScript 进阶', path: '/frontend/js/advanced' },
-      {
-        id: 14,
-        name: '框架',
-        children: [
-          { id: 141, name: 'Vue.js', path: '/frontend/framework/vue' },
-          { id: 142, name: 'React', path: '/frontend/framework/react' },
-          { id: 143, name: 'Angular', path: '/frontend/framework/angular' }
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: '后端开发',
-    children: [
-      { id: 21, name: 'Node.js 实战', path: '/backend/node/practice' },
-      { id: 22, name: '数据库设计', path: '/backend/database/design' },
-      {
-        id: 23,
-        name: 'Java',
-        children: [
-          { id: 231, name: 'Spring', path: '/backend/java/spring' },
-          { id: 232, name: 'MyBatis', path: '/backend/java/mybatis' }
-        ]
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: '运维部署',
-    children: [
-      { id: 31, name: 'Docker 容器化', path: '/devops/docker/container' },
-      { id: 32, name: 'Nginx 配置', path: '/devops/nginx/config' }
-    ]
-  }
-])
+const menuItems = ref([])
 
 // 定义事件发射器
 const emit = defineEmits(['select-leaf'])
+
+// 从后端获取菜单数据
+const fetchMenuData = async () => {
+  try {
+    // 发送请求
+    const result = await get('article/tree', {})
+    
+    // 应答处理
+    if (result.code != "S0000") {
+       alert('system error,please try again later')
+       return
+    }
+
+    // 赋值给菜单数据
+    menuItems.value = result.data
+
+  } catch (error) {
+    console.error('Failed to fetch menu data:', error)
+    alert('system error,please try again later')
+  }
+}
 
 const handleNodeClick = (data, node) => {
   // 检查节点是否有子节点，如果没有则认为是叶子节点
@@ -57,6 +36,11 @@ const handleNodeClick = (data, node) => {
     emit('select-leaf', data)
   }
 }
+
+// 组件挂载时获取菜单数据
+onMounted(() => {
+  fetchMenuData()
+})
 </script>
 
 <template>
@@ -67,8 +51,8 @@ const handleNodeClick = (data, node) => {
     <div class="menu-content">
       <el-tree
         :data="menuItems"
-        node-key="id"
-        :props="{ children: 'children', label: 'name' }"
+        node-key="path"
+        :props="{ children: 'children', label: 'title' }"
         @node-click="handleNodeClick"
         :expand-on-click-node="true"
         :default-expand-all="true"
