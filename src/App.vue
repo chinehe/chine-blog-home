@@ -67,6 +67,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #fff;
+  overflow: hidden;
 }
 
 #app {

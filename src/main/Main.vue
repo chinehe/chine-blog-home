@@ -59,14 +59,14 @@ const article = ref({
 
 <style scoped>
 .main-content {
-  margin-top: 64px;
-  margin-left: 260px;
   min-height: calc(100vh - 64px);
   padding: 32px;
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .article-container {
-  max-width: 800px;
   margin: 0 auto;
 }
 

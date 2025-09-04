@@ -92,73 +92,63 @@ const hasToc = computed(() => headings.value.length > 0)
 </script>
 
 <template>
-  <div class="markdown-wrapper">
     <div class="markdown-container" :class="{ 'with-toc': hasToc }">
       <div class="markdown-body" v-html="htmlContent"></div>
-    </div>
-    <div v-if="hasToc" class="toc-container">
-      <h3 class="toc-title">文章目录</h3>
-      <ul class="toc-tree level-0">
-        <li 
-          v-for="item in headings" 
-          :key="item.id" 
-          class="toc-item"
-        >
-          <a 
-            href="#" 
-            class="toc-link" 
-            @click.prevent="scrollToHeading(item.id)" 
-            :data-id="item.id"
+      <div v-if="hasToc" class="toc-container">
+        <h3 class="toc-title">文章目录</h3>
+        <ul class="toc-tree level-0">
+          <li 
+            v-for="item in headings" 
+            :key="item.id" 
+            class="toc-item"
           >
-            {{ item.title }}
-          </a>
-          <ul v-if="item.children && item.children.length" class="toc-tree level-1">
-            <li 
-              v-for="child1 in item.children" 
-              :key="child1.id" 
-              class="toc-item"
+            <a 
+              href="#" 
+              class="toc-link" 
+              @click.prevent="scrollToHeading(item.id)" 
+              :data-id="item.id"
             >
-              <a 
-                href="#" 
-                class="toc-link" 
-                @click.prevent="scrollToHeading(child1.id)" 
-                :data-id="child1.id"
+              {{ item.title }}
+            </a>
+            <ul v-if="item.children && item.children.length" class="toc-tree level-1">
+              <li 
+                v-for="child1 in item.children" 
+                :key="child1.id" 
+                class="toc-item"
               >
-                {{ child1.title }}
-              </a>
-              <ul v-if="child1.children && child1.children.length" class="toc-tree level-2">
-                <li 
-                  v-for="child2 in child1.children" 
-                  :key="child2.id" 
-                  class="toc-item"
+                <a 
+                  href="#" 
+                  class="toc-link" 
+                  @click.prevent="scrollToHeading(child1.id)" 
+                  :data-id="child1.id"
                 >
-                  <a 
-                    href="#" 
-                    class="toc-link" 
-                    @click.prevent="scrollToHeading(child2.id)" 
-                    :data-id="child2.id"
+                  {{ child1.title }}
+                </a>
+                <ul v-if="child1.children && child1.children.length" class="toc-tree level-2">
+                  <li 
+                    v-for="child2 in child1.children" 
+                    :key="child2.id" 
+                    class="toc-item"
                   >
-                    {{ child2.title }}
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+                    <a 
+                      href="#" 
+                      class="toc-link" 
+                      @click.prevent="scrollToHeading(child2.id)" 
+                      :data-id="child2.id"
+                    >
+                      {{ child2.title }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.markdown-wrapper {
-  display: flex;
-  min-height: 100%;
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-  flex: 1;
-}
 
 .markdown-container {
   flex: 1;

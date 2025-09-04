@@ -63,13 +63,13 @@ onMounted(() => {
 
 <style scoped>
 .menu {
-  position: fixed;
   top: 64px;
   left: 0;
   bottom: 0;
   width: 260px;
   border-right: 1px solid rgba(60, 60, 60, 0.12);
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: visible;
   padding-top: 20px;
   z-index: 99;
 }
